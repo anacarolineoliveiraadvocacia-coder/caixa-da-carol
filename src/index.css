@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f1f5f9;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+/* Safe areas para iPhone (notch e barra inferior) */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: 16px; /* evita zoom automatico no iOS */
+}
+
+/* Esconde spin buttons de numeros */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-slate-100 p-4;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-lg {
+    @apply px-5 py-3.5 text-base;
+  }
+  .btn-primary {
+    @apply bg-marca text-white hover:bg-marca-dark;
+  }
+  .btn-ghost {
+    @apply bg-slate-100 text-slate-700 hover:bg-slate-200;
+  }
+  .field-label {
+    @apply block text-sm font-medium text-slate-600 mb-1.5;
+  }
+  .field-input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-marca focus:ring-2 focus:ring-marca/20;
+  }
+  .chip {
+    @apply px-3 py-1.5 rounded-full text-sm font-medium border;
+  }
+  .pill-tab {
+    @apply flex-1 py-2.5 rounded-lg text-sm font-semibold transition;
+  }
+}
+
+/* Impressao do relatorio */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .print-page {
+    padding: 0 !important;
+  }
+}
+
+/* Animacao suave de entrada */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fadeUp 0.25s ease-out;
+}
