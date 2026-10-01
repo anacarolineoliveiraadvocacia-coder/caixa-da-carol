@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { db, getSettings, saveSettings } from '../db.js'
 import { parseValor, formatNumberBR } from '../utils/format.js'
 import { exportarCSV, exportarJSON, importarJSON } from '../utils/backup.js'
+import SyncCard from '../components/SyncCard.jsx'
 
 export default function Ajustes() {
   const settings = useLiveQuery(() => getSettings(), [], null)
@@ -69,6 +70,9 @@ export default function Ajustes() {
           {msg}
         </div>
       )}
+
+      {/* Sincronização na nuvem */}
+      <SyncCard />
 
       {/* Regra dos potes */}
       <div className="card space-y-3">

@@ -25,6 +25,34 @@ db.version(2).stores({
   invoicePayments: '++id, cardId, monthKey, [cardId+monthKey]'
 })
 
+// --- Detecção de mudanças locais (para a sincronização na nuvem) ---
+// applyingRemote: quando true, as mudanças vieram da nuvem e NÃO devem gerar
+// um novo envio (evita eco). onLocalChange: callback que o sync registra.
+export const syncGuard = { applyingRemote: false, onLocalChange: null }
+
+function notifyLocalChange() {
+  if (syncGuard.applyingRemote) return
+  try {
+    localStorage.setItem('cxc_local_updated_at', String(Date.now()))
+  } catch (e) {
+    /* ignore */
+  }
+  if (syncGuard.onLocalChange) {
+    try { syncGuard.onLocalChange() } catch (e) { /* ignore */ }
+  }
+}
+
+const SYNC_TABLES = [
+  'transactions', 'fixedBills', 'billPayments', 'reserveMovements', 'settings',
+  'accounts', 'cards', 'categories', 'invoicePayments'
+]
+for (const name of SYNC_TABLES) {
+  const t = db.table(name)
+  t.hook('creating', function () { notifyLocalChange() })
+  t.hook('updating', function () { notifyLocalChange() })
+  t.hook('deleting', function () { notifyLocalChange() })
+}
+
 export const DEFAULT_SETTINGS = {
   id: 1,
   potes: { salario: 60, escritorio: 20, reserva: 20 },
