@@ -3,8 +3,8 @@
 // do Supabase, que garantem que cada pessoa só enxerga os próprios dados.
 // Preencha os dois valores com os dados do SEU projeto Supabase:
 //   Project Settings → API → "Project URL" e "anon public".
-export const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co'
-export const SUPABASE_ANON_KEY = 'COLE_AQUI_A_CHAVE_ANON'
+export const SUPABASE_URL = 'https://pcbdrqzilassvexydrqy.supabase.co'
+export const SUPABASE_ANON_KEY = 'sb_publishable_ECtb284T5e9znfTWWl9Vww_6wv8pjVK'
 
 export function syncConfigured() {
   return (
